@@ -25,6 +25,8 @@ class HTTPAuth(object):
         self.realm = "Authentication Required"
         self.get_password(default_get_password)
         self.error_handler(default_auth_error)
+        self.status_code = 401
+        self.description = 'Invalid credentials'
 
     def get_password(self, f):
         self.get_password_callback = f

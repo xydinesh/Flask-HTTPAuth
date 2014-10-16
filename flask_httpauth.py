@@ -85,6 +85,10 @@ class HTTPBasicAuth(HTTPAuth):
 
     def authenticate(self, auth, stored_password):
         client_password = auth.password
+        # resetting error code and description
+        self.status_code = 401
+        self.description = 'Invalid credentials'
+
         if self.verify_password_callback:
             return self.verify_password_callback(auth.username, client_password)
         if self.hash_password_callback:

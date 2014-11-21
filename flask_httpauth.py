@@ -81,7 +81,7 @@ class HTTPBasicAuth(HTTPAuth):
         return f
 
     def authenticate_header(self):
-        return 'Basic realm="{0}"'.format(self.realm)
+        return 'X-Basic realm="{0}"'.format(self.realm)
 
     def authenticate(self, auth, stored_password):
         client_password = auth.password

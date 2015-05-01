@@ -11,7 +11,7 @@ This module provides Basic and Digest HTTP authentication for Flask routes.
 from functools import wraps
 from hashlib import md5
 from random import Random, SystemRandom
-from flask import request, make_response, session
+from flask import request, make_response, session, current_app
 
 
 class HTTPAuth(object):
@@ -48,6 +48,8 @@ class HTTPAuth(object):
     def login_required(self, f):
         @wraps(f)
         def decorated(*args, **kwargs):
+            if current_app.config['KRYSTAL_BASIC_AUTH'] == False and 'Http-Iv-User' in request.headers():
+                return True
             auth = request.authorization
             # We need to ignore authentication headers for OPTIONS to avoid
             # unwanted interactions with CORS.

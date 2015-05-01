@@ -48,7 +48,8 @@ class HTTPAuth(object):
     def login_required(self, f):
         @wraps(f)
         def decorated(*args, **kwargs):
-            if current_app.config['KRYSTAL_BASIC_AUTH'] == False and 'Http-Iv-User' in request.headers():
+            http_iv_user = request.headers('HTTP-Iv-User', None)
+            if current_app.config['KRYSTAL_BASIC_AUTH'] == False and (http_iv_user is not None):
                 return True
             auth = request.authorization
             # We need to ignore authentication headers for OPTIONS to avoid
